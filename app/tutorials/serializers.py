@@ -4,6 +4,5 @@ from tutorials.models import Tutorial
 
 class TutorialSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tutorial
-        fields = ('id', 'title', 'tutorial_url', 'image_path', 'description',
-                  'published')
+        model = Customers
+        fields = ('customer_id', 'company_name', 'contact_name', 'contact_title', 'address', 'city')
