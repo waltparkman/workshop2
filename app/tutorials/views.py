@@ -6,7 +6,8 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from tutorials.models import Tutorial
+from tutorials.models import Customers
+
 from tutorials.serializers import TutorialSerializer
 from rest_framework.decorators import api_view
 
@@ -17,7 +18,7 @@ from rest_framework.decorators import api_view
 
 def index(request):
     print("------------------------- I AM HERE")
-    queryset = Tutorial.objects.all()
+    queryset = Customers.objects.all()
     return render(request, "tutorials/index.html", {'tutorials': queryset})
 
 
@@ -26,7 +27,7 @@ class index(APIView):
     template_name = 'tutorials/index.html'
 
     def get(self, request):
-        queryset = Tutorial.objects.all()
+        queryset = Customers.objects.all()
         return Response({'tutorials': queryset})
 
 
@@ -35,14 +36,14 @@ class list_all_tutorials(APIView):
     template_name = 'tutorials/tutorial_list.html'
 
     def get(self, request):
-        queryset = Tutorial.objects.all()
+        queryset = Customers.objects.all()
         return Response({'tutorials': queryset})
 
 
 @api_view(['GET', 'POST', 'DELETE'])
 def tutorial_list(request):
     if request.method == 'GET':
-        tutorials = Tutorial.objects.all()
+        tutorials = Customers.objects.all()
 
         title = request.GET.get('title', None)
         if title is not None:
@@ -62,22 +63,22 @@ def tutorial_list(request):
         return JsonResponse(tutorial_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        count = Tutorial.objects.all().delete()
-        return JsonResponse(
-            {
-                'message':
-                '{} Tutorials were deleted successfully!'.format(count[0])
-            },
-            status=status.HTTP_204_NO_CONTENT)
+    #elif request.method == 'DELETE':
+    #    count = Tutorial.objects.all().delete()
+    #    return JsonResponse(
+    #        {
+    #            'message':
+    #            '{} Tutorials were deleted successfully!'.format(count[0])
+    #        },
+    #        status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def tutorial_detail(request, pk):
     try:
-        tutorial = Tutorial.objects.get(pk=pk)
-    except Tutorial.DoesNotExist:
-        return JsonResponse({'message': 'The tutorial does not exist'},
+        tutorial = Customers.objects.get(pk=pk)
+    except Customers.DoesNotExist:
+        return JsonResponse({'message': 'The customer does not exist'},
                             status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
@@ -93,16 +94,16 @@ def tutorial_detail(request, pk):
         return JsonResponse(tutorial_serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        tutorial.delete()
-        return JsonResponse({'message': 'Tutorial was deleted successfully!'},
-                            status=status.HTTP_204_NO_CONTENT)
+    #elif request.method == 'DELETE':
+    #    tutorial.delete()
+    #    return JsonResponse({'message': 'Tutorial was deleted successfully!'},
+    #                        status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
 def tutorial_list_published(request):
-    tutorials = Tutorial.objects.filter(published=True)
+    tutorials = Customers.objects.filter(published=True)
 
-    if request.method == 'GET':
-        tutorials_serializer = TutorialSerializer(tutorials, many=True)
-        return JsonResponse(tutorials_serializer.data, safe=False)
+    #if request.method == 'GET':
+    #    tutorials_serializer = TutorialSerializer(tutorials, many=True)
+    #    return JsonResponse(tutorials_serializer.data, safe=False)

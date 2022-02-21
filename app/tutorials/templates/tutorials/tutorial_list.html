@@ -1,12 +1,25 @@
 <html>
 
 <body>
-  <h1>Tutorials</h1>
-  <ul>
-    {% for tutorial in tutorials %}
-    <li>{{ tutorial.title }}</li>
-    {% endfor %}
-  </ul>
+  <h2>Customers<h2>
+    <div class="table-div">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Address</th>
+        <tr>
+      <thead>
+      <tbody>
+        {% for customer in customers_list %}
+          <tr>
+            <td>{{customer.company_name}}</td>
+            <td>{{customer.address}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
 </body>
 
 </html>
