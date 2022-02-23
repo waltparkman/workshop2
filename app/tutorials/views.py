@@ -68,18 +68,10 @@ def custUpdate(request, id):
                 pass    
     return render(request,'cust-update.html',{'form':form})  
 
-def bookDelete(request, id):
+def custDelete(request, id):
     customer = Customers.objects.get(id=id)
     try:
         customer.delete()
     except:
         pass
     return redirect('tutorial_list')
-
-@api_view(['GET'])
-def tutorial_list_published(request):
-    tutorials = Customers.objects.filter(published=True)
-
-    #if request.method == 'GET':
-    #    tutorials_serializer = TutorialSerializer(tutorials, many=True)
-    #    return JsonResponse(tutorials_serializer.data, safe=False)

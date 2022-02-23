@@ -2,7 +2,7 @@
 {% endblock%} {% block content%}
   <a type="button" class="btn btn-success" href="{%url 'cust-create' %}">Create</a>
   <div class="card-body">
-    <h4>Customers<h4>
+    <h4>{{customers_list|length}} Customers Found<h4>
     <table class="table">
     <thead>
       <tr>
@@ -23,6 +23,6 @@
         </td>
       {% endfor %}
     </tbody>
-  </table>
+    </table>
   </div>
 {% endblock %} {% block jsfiles %} {% endblock jsfiles %}

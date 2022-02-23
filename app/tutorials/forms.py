@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Customer
+from .models import Customers
 
 class CustomerForm(ModelForm):
     class Meta:
-        model = Customer
+        model = Customers
         fields = '__all__'
