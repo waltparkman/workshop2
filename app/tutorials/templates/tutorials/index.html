@@ -1,20 +1,26 @@
 {% extends "tutorials/base.html" %} {% load static %}{% block title %} Customers
 {% endblock%} {% block content%}
-<h2>Customers<h2>
-  <div class="table-div">
-  <table class="table">
+  <a type="button" class="btn btn-success" href="{%url 'cust-create' %}">Create</a>
+  <div class="card-body">
+    <h4>Customers<h4>
+    <table class="table">
     <thead>
       <tr>
-        <th>Company Name</th>
-        <th>Address</th>
-      <tr>
-    <thead>
+        <th scope="col">Company Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
     <tbody>
       {% for customer in customers_list %}
         <tr>
           <td>{{customer.company_name}}</td>
           <td>{{customer.address}}</td>
-        </tr>
+          <td>{{customer.city}}</td>
+          <td><a type="button" class="btn btn-warning" href="/cust-update/{{ customer.id }}">Update</a>
+            <a type="button" class="btn btn-danger" href="/cust-delete/{{ customer.id }}">Delete</a>
+        </td>
       {% endfor %}
     </tbody>
   </table>

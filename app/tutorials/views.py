@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from tutorials.models import Customers
+from tutorials.forms import CustomerForm
 
 from tutorials.serializers import TutorialSerializer
 from rest_framework.decorators import api_view
@@ -39,66 +40,41 @@ class list_all_tutorials(APIView):
         queryset = Customers.objects.all()
         return Response({'tutorials': queryset})
 
+def custCreate(request):  
+    if request.method == "POST":  
+        form = CustomerForm(request.POST)  
+        if form.is_valid():  
+            try:  
+                form.save() 
+                model = form.instance
+                return redirect('tutorial_list')  
+            except:  
+                pass  
+    else:  
+        form = CustomerForm()  
+    return render(request,'cust-create.html',{'form':form})  
 
-@api_view(['GET', 'POST', 'DELETE'])
-def tutorial_list(request):
-    if request.method == 'GET':
-        tutorials = Customers.objects.all()
+def custUpdate(request, id):  
+    customer = Customers.objects.get(id=id)
+    form = CustomerForm(initial={'name': customer.company_name, 'address': customer.address, 'city': customer.city})
+    if request.method == "POST":  
+        form = CustomerForm(request.POST, instance=customer)  
+        if form.is_valid():  
+            try:  
+                form.save() 
+                model = form.instance
+                return redirect('/tutorial_list')  
+            except Exception as e: 
+                pass    
+    return render(request,'cust-update.html',{'form':form})  
 
-        title = request.GET.get('title', None)
-        if title is not None:
-            tutorials = tutorials.filter(title__icontains=title)
-
-        tutorials_serializer = TutorialSerializer(tutorials, many=True)
-        return JsonResponse(tutorials_serializer.data, safe=False)
-        # 'safe=False' for objects serialization
-
-    elif request.method == 'POST':
-        tutorial_data = JSONParser().parse(request)
-        tutorial_serializer = TutorialSerializer(data=tutorial_data)
-        if tutorial_serializer.is_valid():
-            tutorial_serializer.save()
-            return JsonResponse(tutorial_serializer.data,
-                                status=status.HTTP_201_CREATED)
-        return JsonResponse(tutorial_serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
-    #elif request.method == 'DELETE':
-    #    count = Tutorial.objects.all().delete()
-    #    return JsonResponse(
-    #        {
-    #            'message':
-    #            '{} Tutorials were deleted successfully!'.format(count[0])
-    #        },
-    #        status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def tutorial_detail(request, pk):
+def bookDelete(request, id):
+    customer = Customers.objects.get(id=id)
     try:
-        tutorial = Customers.objects.get(pk=pk)
-    except Customers.DoesNotExist:
-        return JsonResponse({'message': 'The customer does not exist'},
-                            status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        tutorial_serializer = TutorialSerializer(tutorial)
-        return JsonResponse(tutorial_serializer.data)
-
-    elif request.method == 'PUT':
-        tutorial_data = JSONParser().parse(request)
-        tutorial_serializer = TutorialSerializer(tutorial, data=tutorial_data)
-        if tutorial_serializer.is_valid():
-            tutorial_serializer.save()
-            return JsonResponse(tutorial_serializer.data)
-        return JsonResponse(tutorial_serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
-    #elif request.method == 'DELETE':
-    #    tutorial.delete()
-    #    return JsonResponse({'message': 'Tutorial was deleted successfully!'},
-    #                        status=status.HTTP_204_NO_CONTENT)
-
+        customer.delete()
+    except:
+        pass
+    return redirect('tutorial_list')
 
 @api_view(['GET'])
 def tutorial_list_published(request):

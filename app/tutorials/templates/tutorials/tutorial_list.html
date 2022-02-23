@@ -1,25 +1,31 @@
 <html>
 
 <body>
-  <h2>Customers<h2>
-    <div class="table-div">
+  <a type="button" class="btn btn-success" href="{%url 'cust-create' %}">Create</a>
+  <div class="card-body">
+    <h4>Customers<h4>
     <table class="table">
-      <thead>
+    <thead>
+      <tr>
+        <th scope="col">Company Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers_list %}
         <tr>
-          <th>Company Name</th>
-          <th>Address</th>
-        <tr>
-      <thead>
-      <tbody>
-        {% for customer in customers_list %}
-          <tr>
-            <td>{{customer.company_name}}</td>
-            <td>{{customer.address}}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    </div>
+          <td>{{customer.company_name}}</td>
+          <td>{{customer.address}}</td>
+          <td>{{customer.city}}</td>
+          <td><a type="button" class="btn btn-warning" href="/cust-update/{{ customer.id }}">Update</a>
+            <a type="button" class="btn btn-danger" href="/cust-delete/{{ customer.id }}">Delete</a>
+        </td>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
 </body>
 
 </html>
