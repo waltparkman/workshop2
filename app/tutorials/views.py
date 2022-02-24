@@ -51,8 +51,5 @@ def custUpdate(request, id):
 
 def custDelete(request, id):
     customer = Customers.objects.get(customer_id=id)
-    try:
-        customer.delete()
-    except:
-        pass
-    return redirect('tutorials/index.html')
+    form = CustomerForm(initial={'name': customer.company_name, 'address': customer.address, 'city': customer.city})
+    return render(request,'tutorials/cust-delete.html',{'form':form})  
