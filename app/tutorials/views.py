@@ -28,15 +28,15 @@ def custCreate(request):
             try:  
                 form.save() 
                 model = form.instance
-                return redirect('tutorial_list')  
+                return redirect('tutorials/index.html')  
             except:  
                 pass  
     else:  
         form = CustomerForm()  
-    return render(request,'cust-create.html',{'form':form})  
+    return render(request,'tutorials/cust-create.html',{'form':form})  
 
 def custUpdate(request, id):  
-    customer = Customers.objects.get(id=id)
+    customer = Customers.objects.get(customer_id=id)
     form = CustomerForm(initial={'name': customer.company_name, 'address': customer.address, 'city': customer.city})
     if request.method == "POST":  
         form = CustomerForm(request.POST, instance=customer)  
@@ -44,15 +44,15 @@ def custUpdate(request, id):
             try:  
                 form.save() 
                 model = form.instance
-                return redirect('/tutorial_list')  
+                return redirect('tutorials/index.html')  
             except Exception as e: 
                 pass    
-    return render(request,'cust-update.html',{'form':form})  
+    return render(request,'tutorials/cust-update.html',{'form':form})  
 
 def custDelete(request, id):
-    customer = Customers.objects.get(id=id)
+    customer = Customers.objects.get(customer_id=id)
     try:
         customer.delete()
     except:
         pass
-    return redirect('tutorial_list')
+    return redirect('tutorials/index.html')

@@ -18,8 +18,8 @@
           <td>{{customer.company_name}}</td>
           <td>{{customer.address}}</td>
           <td>{{customer.city}}</td>
-          <td><a type="button" class="btn btn-warning" href="/cust-update/{{ customer.id }}">Update</a>
-            <a type="button" class="btn btn-danger" href="/cust-delete/{{ customer.id }}">Delete</a>
+          <td><a type="button" class="btn btn-warning" href="/cust-update/{{ customer.customer_id }}">Update</a>
+            <a type="button" class="btn btn-danger" href="/cust-delete/{{ customer.customer_id }}">Delete</a>
         </td>
       {% endfor %}
     </tbody>
