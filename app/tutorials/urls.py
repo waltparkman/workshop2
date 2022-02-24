@@ -6,7 +6,6 @@ from django.conf import settings
 urlpatterns = [
     path('', tutorials_views.index.as_view(), name='home'),
     path('api/tutorials/', tutorials_views.list_all_tutorials),
-    path('api/tutorials/published/', tutorials_views.tutorial_list_published),
     path('cust-list', tutorials_views.list_all_tutorials, name='cust-list'),
     path('cust-create', tutorials_views.custCreate, name='cust-create'),
     path('cust-update/<int:id>', tutorials_views.custUpdate, name='cust-update'),
