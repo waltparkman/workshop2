@@ -59,7 +59,7 @@ ROOT_URLCONF = 'nc_tutorials.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'tutorials', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'nc_tutorials.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        'NAME': 'uhcsltrw',
+        'USER': 'uhcsltrw',
+        'PASSWORD': 'dlQS2DSH8NlUkjDEmnJdwH-reSGlKY8Z',
+        'HOST': 'kashin.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
 

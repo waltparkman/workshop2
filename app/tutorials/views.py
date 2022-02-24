@@ -17,28 +17,9 @@ from rest_framework.decorators import api_view
 #     return render(request, "tutorials/index.html")
 
 
-def index(request):
-    print("------------------------- I AM HERE")
-    queryset = Customers.objects.all()
-    return render(request, "tutorials/index.html", {'tutorials': queryset})
-
-
-class index(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'tutorials/index.html'
-
-    def get(self, request):
-        queryset = Customers.objects.all()
-        return Response({'tutorials': queryset})
-
-
-class list_all_tutorials(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'tutorials/tutorial_list.html'
-
-    def get(self, request):
-        queryset = Customers.objects.all()
-        return Response({'tutorials': queryset})
+def custList(request):  
+    customers = Customers.objects.all()  
+    return render(request,"tutorials/index.html",{'customers':customers})  
 
 def custCreate(request):  
     if request.method == "POST":  
