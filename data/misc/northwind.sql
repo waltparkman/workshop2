@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS nc_tutorials_db;
-CREATE DATABASE nc_tutorials_db;
-
-\c nc_tutorials_db
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
