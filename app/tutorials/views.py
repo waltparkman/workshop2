@@ -37,7 +37,7 @@ def custCreate(request):
 
 def custUpdate(request, id):  
     customer = Customers.objects.get(customer_id=id)
-    form = CustomerForm(initial={'name': customer.company_name, 'address': customer.address, 'city': customer.city})
+    form = CustomerForm(initial={'customer_id': customer.customer_id, 'company_name': customer.company_name, 'contact_name': customer.contact_name, 'contact_title': customer.contact_title, 'address': customer.address, 'city': customer.city, 'region': customer.region, 'postal-code': customer.postal_code, 'country': customer.country, 'phone': customer.phone, 'fax': customer.fax })
     if request.method == "POST":  
         form = CustomerForm(request.POST, instance=customer)  
         if form.is_valid():  
