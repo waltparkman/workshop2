@@ -13,6 +13,10 @@ class Customers(models.Model):
     phone = models.CharField(max_length=24, blank=True, null=True)
     fax = models.CharField(max_length=24, blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.company_name}, {self.contact_name}, {self.city}, {self.country}"
+
     class Meta:
         managed = False
         db_table = 'customers'
+        ordering = ("company_name", "contact_name", "city", "country")
